@@ -1,52 +1,27 @@
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-} from '@chakra-ui/react'
+import { Box, Flex } from "@chakra-ui/react";
+import { Routes, Route } from "react-router-dom";
+
+import Sidebar from "./components/sidebar";
+import Home from "./pages/home";
+import PatientFeedback from "./pages/patient_feedback";
 
 function App() {
   return (
-    <>
-      <Accordion>
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box as='span' flex='1' textAlign='left'>
-                Section 1 title
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat.
-          </AccordionPanel>
-        </AccordionItem>
+    <Flex>
 
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box as='span' flex='1' textAlign='left'>
-                Section 2 title
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat.
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
-    </>
-  )
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Page Content */}
+      <Box flex="1" p={5}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/feedback" element={<PatientFeedback />} />
+        </Routes>
+      </Box>
+
+    </Flex>
+  );
 }
 
-export default App
+export default App;
