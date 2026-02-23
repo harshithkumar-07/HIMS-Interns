@@ -153,7 +153,7 @@ export const updateFeedback = async (req, res) => {
       });
     }
 
-    const allowedModes = ["Online", "Offline", "Kiosk", "App"];
+    const allowedModes = ["Online", "Offline", "Kiosk", "App","source"];
     if (feedback_mode && !allowedModes.includes(feedback_mode)) {
       return res.status(400).json({
         success: false,

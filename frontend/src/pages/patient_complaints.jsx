@@ -114,7 +114,7 @@ export default function PatientComplaints() {
         complaint_datetime: new Date().toISOString(), // Auto timestamp
       };
 
-      const response = await fetch("http://localhost:3000/complaints", {
+      const response = await fetch("http://localhost:3000/complaints/postComplaint", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
