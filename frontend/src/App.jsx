@@ -1,19 +1,29 @@
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-} from '@chakra-ui/react'
-import Complaint from './pages/Complaint';
+import { Box, Flex } from "@chakra-ui/react";
+import { Routes, Route } from "react-router-dom";
 
+import Sidebar from "./components/sidebar";
+import Home from "./pages/home";
+import PatientFeedback from "./pages/patient_feedback";
+import AddComplaint from "./pages/Complaint";
 function App() {
   return (
-    <>
-      <Complaint />
-    </>
-  )
+    <Flex>
+
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Page Content */}
+      <Box flex="1" p={5}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/feedback" element={<PatientFeedback />} />
+          <Route path="/complaints" element={<AddComplaint />} />
+
+        </Routes>
+      </Box>
+
+    </Flex>
+  );
 }
 
-export default App
+export default App;
