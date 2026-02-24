@@ -1,6 +1,9 @@
-export const postComplaint = async (req, res) => {
-  const client = await con.connect();
 
+
+export const postComplaint = async (req, res) => {
+  
+  const client = await con.connect();
+  
   try {
     // Multer populates req.body from the FormData text fields
     const {
@@ -19,7 +22,7 @@ export const postComplaint = async (req, res) => {
     if (!patient_id || !patient_name || !contact_number) {
       return res.status(400).json({
         success: false,
-        message: "Required fields are missing"
+        message: "Required fields are missing",
       });
     }
 
@@ -34,7 +37,6 @@ export const postComplaint = async (req, res) => {
 
     const result = await client.query(insertQuery, [
       patient_id,
-      patient_name,
       contact_number,
       complaint_description,
       priority,
@@ -42,12 +44,10 @@ export const postComplaint = async (req, res) => {
       attachment_path
     ]);
 
-    await client.query("COMMIT");
-
     return res.status(201).json({
       success: true,
       message: "Complaint submitted successfully",
-      data: result.rows[0]
+      data: result.rows[0],
     });
 
   } catch (error) {
@@ -57,4 +57,4 @@ export const postComplaint = async (req, res) => {
   } finally {
     client.release();
   }
-};
+}};

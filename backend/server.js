@@ -11,6 +11,20 @@ const PORT=process.env.PORT || 3000
 
 import con from "./db.js"
 
+const app=express()
+app.use(
+  cors({
+    origin: "http://localhost:5174",
+    credentials: false,
+  }),
+);
+app.use(express.json())
+
+app.use("/uploads", express.static("uploads"));
+
+const PORT=process.env.PORT || 3000
+
+
 app.use("/feedback",patient_feedback)
 app.use("/complaints",patient_complaints)
 app.listen(PORT,()=>{

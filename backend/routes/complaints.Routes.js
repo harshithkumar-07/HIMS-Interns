@@ -3,6 +3,7 @@ import {  getComplaint } from "../controllers/complaints.controllers.js"
 import { postComplaint } from "../controllers/complaints.controllers.js"
 import { updateComplaint } from "../controllers/complaints.controllers.js"
 import { deleteComplaint } from "../controllers/complaints.controllers.js"
+import upload from "../middleware/upload.js"
 const patient_complaints=express.Router()
 
 patient_complaints.get("/getComplaint",getComplaint)
