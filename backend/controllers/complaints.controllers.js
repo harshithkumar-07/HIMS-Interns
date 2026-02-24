@@ -275,7 +275,7 @@ export const postComplaint = async (req, res) => {
   const client = await con.connect();
   
   try {
-    console.log(req.body);
+     await client.query("BEGIN");
     const {
       patient_id,
       patient_name,
@@ -296,6 +296,7 @@ export const postComplaint = async (req, res) => {
       !priority ||
       !status
     ) {
+      await client.query("ROLLBACK");
       return res.status(400).json({
         success: false,
         message: "Required fields are missing",
@@ -318,6 +319,8 @@ export const postComplaint = async (req, res) => {
       attachment_path,
       patient_name,
     ]);
+    await client.query("COMMIT");
+
 
     return res.status(201).json({
       success: true,
@@ -326,7 +329,7 @@ export const postComplaint = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Insert Error:", error.message);
+    await client.query("ROLLBACK");
     return res.status(500).json({
       success: false,
       message: error.message,
