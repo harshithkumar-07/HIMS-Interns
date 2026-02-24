@@ -20,6 +20,7 @@ import {
 export default function PatientComplaints() {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
+  const [fileKey, setFileKey] = useState(Date.now());
 
   const [formData, setFormData] = useState({
     patient_id: "",
@@ -27,19 +28,24 @@ export default function PatientComplaints() {
     contact_number: "",
     priority: "",
     status: "",
-    attachment: null,
+    attachment_path: null,
     complaint_description: "",
   });
 
   const [errors, setErrors] = useState({});
 
-  // Handle Input Change
+  // 🔥 Handle Input Change with Validations
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Allow only numbers for specific fields
+    // Allow only numbers for ID & contact
     if (name === "patient_id" || name === "contact_number") {
       if (!/^\d*$/.test(value)) return;
+    }
+
+    // 🚫 Prevent numbers & special chars in patient_name
+    if (name === "patient_name") {
+      if (!/^[A-Za-z\s]*$/.test(value)) return;
     }
 
     setFormData({ ...formData, [name]: value });
@@ -49,10 +55,10 @@ export default function PatientComplaints() {
     }
   };
 
-  // Handle File Upload
+  // File Upload
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData({ ...formData, attachment: file });
+    setFormData({ ...formData, attachment_path: file });
   };
 
   // Validation
@@ -97,48 +103,45 @@ export default function PatientComplaints() {
       contact_number: "",
       priority: "",
       status: "",
-      attachment: null,
+      attachment_path: null,
       complaint_description: "",
     });
+
+    setFileKey(Date.now()); // reset file input
     setErrors({});
   };
 
   // Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validate()) return;
 
     try {
       setLoading(true);
 
-      // Create FormData for multipart/form-data support
       const formPayload = new FormData();
 
-      // Append text fields
       formPayload.append("patient_id", formData.patient_id);
       formPayload.append("patient_name", formData.patient_name);
       formPayload.append("contact_number", formData.contact_number);
       formPayload.append("priority", formData.priority);
       formPayload.append("status", formData.status);
       formPayload.append("complaint_description", formData.complaint_description);
-      formPayload.append("complaint_datetime", new Date().toISOString());
 
-      // Append file only if it exists
-      if (formData.attachment) {
-        formPayload.append("attachment", formData.attachment);
+      if (formData.attachment_path) {
+        formPayload.append("attachment_path", formData.attachment_path);
       }
-      
-      const response = await fetch("http://localhost:3000/complaints/postComplaint", {
-        method: "POST",
-        // Note: Do NOT set Content-Type header when sending FormData
-        body: formPayload,
-      });
+
+      const response = await fetch(
+        "http://localhost:3000/complaints/postComplaint",
+        {
+          method: "POST",
+          body: formPayload,
+        }
+      );
 
       const result = await response.json();
-      
 
-      // Your backend returns { success: true }
       if (response.ok && result.success) {
         toast({
           title: "Complaint Submitted",
@@ -177,14 +180,13 @@ export default function PatientComplaints() {
 
         <form onSubmit={handleSubmit}>
           <VStack spacing={6} align="stretch">
-            {/* Row 1 */}
+            
             <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={6}>
               <GridItem>
                 <FormControl isRequired isInvalid={!!errors.patient_id}>
                   <FormLabel>Patient ID</FormLabel>
                   <Input
                     name="patient_id"
-                    placeholder="Enter Patient ID"
                     value={formData.patient_id}
                     onChange={handleChange}
                   />
@@ -197,7 +199,6 @@ export default function PatientComplaints() {
                   <FormLabel>Patient Name</FormLabel>
                   <Input
                     name="patient_name"
-                    placeholder="Enter Patient Name"
                     value={formData.patient_name}
                     onChange={handleChange}
                   />
@@ -206,14 +207,12 @@ export default function PatientComplaints() {
               </GridItem>
             </Grid>
 
-            {/* Row 2 */}
             <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={6}>
               <GridItem>
                 <FormControl isRequired isInvalid={!!errors.contact_number}>
                   <FormLabel>Contact Number</FormLabel>
                   <Input
                     name="contact_number"
-                    placeholder="10-digit mobile number"
                     value={formData.contact_number}
                     onChange={handleChange}
                   />
@@ -228,8 +227,8 @@ export default function PatientComplaints() {
                     name="priority"
                     value={formData.priority}
                     onChange={handleChange}
-                    placeholder="Select priority"
                   >
+                    <option value="">Select priority</option>
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
@@ -239,7 +238,6 @@ export default function PatientComplaints() {
               </GridItem>
             </Grid>
 
-            {/* Row 3 */}
             <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={6}>
               <GridItem>
                 <FormControl isRequired isInvalid={!!errors.status}>
@@ -248,8 +246,8 @@ export default function PatientComplaints() {
                     name="status"
                     value={formData.status}
                     onChange={handleChange}
-                    placeholder="Select status"
                   >
+                    <option value="">Select status</option>
                     <option value="New">New</option>
                     <option value="Open">Open</option>
                   </Select>
@@ -259,25 +257,22 @@ export default function PatientComplaints() {
 
               <GridItem>
                 <FormControl>
-                  <FormLabel>Attachment (Optional Proof)</FormLabel>
+                  <FormLabel>Attachment (Optional)</FormLabel>
                   <Input
+                    key={fileKey}
                     type="file"
                     accept=".jpg,.jpeg,.png,.pdf"
                     onChange={handleFileChange}
-                    p={1}
                     variant="unstyled"
                   />
                 </FormControl>
               </GridItem>
             </Grid>
 
-            {/* Description */}
             <FormControl isRequired isInvalid={!!errors.complaint_description}>
               <FormLabel>Complaint Description</FormLabel>
               <Textarea
-                rows={4}
                 name="complaint_description"
-                placeholder="Describe the issue in detail..."
                 value={formData.complaint_description}
                 onChange={handleChange}
               />
@@ -290,11 +285,11 @@ export default function PatientComplaints() {
                 colorScheme="blue"
                 size="lg"
                 isLoading={loading}
-                loadingText="Submitting..."
               >
                 Submit Complaint
               </Button>
             </Box>
+
           </VStack>
         </form>
       </Container>
