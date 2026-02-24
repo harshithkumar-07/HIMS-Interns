@@ -1,5 +1,5 @@
 import {Pool} from "pg"
-import "dotenv/congig"
+import "dotenv/config"
 const con=new Pool({
     host:"localhost",
     user:"postgres",

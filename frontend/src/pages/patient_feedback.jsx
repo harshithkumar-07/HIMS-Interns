@@ -59,7 +59,7 @@ function PatientFeedback() {
     } catch (error) {
       toast({
         title: "Server Error",
-        status: "error",
+        status: error,
         duration: 3000,
         isClosable: true,
       })

@@ -240,7 +240,6 @@
 
 
 
-
 import con from "../db.js";
 
 /* =========================
@@ -268,13 +267,15 @@ export const getComplaint = async (req, res) => {
 };
 
 
-/* =========================
-   POST
-========================= */
-export const postComplaint = async (req, res) => {
-  const client = await con.connect();
 
+
+
+export const postComplaint = async (req, res) => {
+  
+  const client = await con.connect();
+  
   try {
+    console.log(req.body);
     const {
       patient_id,
       patient_name,
@@ -282,10 +283,11 @@ export const postComplaint = async (req, res) => {
       complaint_description,
       priority,
       status,
-      attachment_path
     } = req.body;
 
-    // Basic validation
+    const attachment_path = req.file ? req.file.path : null;
+    console.log(attachment_path)
+
     if (
       !patient_id ||
       !patient_name ||
@@ -296,67 +298,47 @@ export const postComplaint = async (req, res) => {
     ) {
       return res.status(400).json({
         success: false,
-        message: "Required fields are missing"
+        message: "Required fields are missing",
       });
     }
-
-    const allowedPriorities = ["Low", "Medium", "High"];
-    const allowedStatus = ["New", "Open", "In Progress", "Resolved", "Closed"];
-
-    if (!allowedPriorities.includes(priority)) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid priority value"
-      });
-    }
-
-    if (!allowedStatus.includes(status)) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid status value"
-      });
-    }
-
-    await client.query("BEGIN");
 
     const insertQuery = `
       INSERT INTO patient_complaint
-      (patient_id,patient_name, contact_number, complaint_description, priority, status, attachment_path, complaint_datetime)
-      VALUES ($1, $2, $3, $4, $5, $6, $7,NOW())
+      (patient_id, contact_number, complaint_description, priority, status, attachment_path, complaint_datetime, patient_name)
+      VALUES ($1, $2, $3, $4, $5, $6, NOW(), $7)
       RETURNING *;
     `;
 
     const result = await client.query(insertQuery, [
       patient_id,
-      patient_name,
       contact_number,
       complaint_description,
       priority,
       status,
-      attachment_path ?? null,
-      
+      attachment_path,
+      patient_name,
     ]);
-
-    await client.query("COMMIT");
 
     return res.status(201).json({
       success: true,
       message: "Complaint submitted successfully",
-      data: result.rows[0]
+      data: result.rows[0],
     });
 
   } catch (error) {
-    await client.query("ROLLBACK");
     console.error("Insert Error:", error.message);
-
     return res.status(500).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   } finally {
     client.release();
   }
 };
+
+// ================= COMPLAINT API =================
+
+
 
 
 /* =========================
