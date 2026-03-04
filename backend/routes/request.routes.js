@@ -11,6 +11,6 @@ const router = express.Router();
 router.get("/getNextRequestNumber", getNextRequestNumber);
 
 // Post request (with existing upload middleware)
-router.post("/postRequest", upload.single("attachment"), postRequest);
+router.post("/postRequest", upload, postRequest);
 
 export default router;
