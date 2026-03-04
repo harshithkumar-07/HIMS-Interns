@@ -1,7 +1,13 @@
-import { Box, VStack, Button, Text } from "@chakra-ui/react"
-import { NavLink } from "react-router-dom"
-import { FaHome, FaCommentDots, FaExclamationCircle, FaFileAlt } from "react-icons/fa"
-import { MdFeedback } from "react-icons/md"
+import { Box, VStack, Button, Text } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
+import {
+  FaHome,
+  FaCommentDots,
+  FaExclamationCircle,
+  FaFileAlt,
+  FaClipboardList,
+} from "react-icons/fa";
+import { MdFeedback } from "react-icons/md";
 
 function Sidebar() {
   const menuItems = [
@@ -9,10 +15,13 @@ function Sidebar() {
     { name: "Patient Feedback", path: "/feedback", icon: FaCommentDots },
     { name: "Feedback List", path: "/feedback-list", icon: MdFeedback },
     { name: "Patient Complaints", path: "/complaints", icon: FaExclamationCircle },
+    { name: "Complaint List", path: "/complaint_list", icon: FaClipboardList },
     { name: "Request (Employee)", path: "/request", icon: FaFileAlt },
-    { name: "Register Patient", path: "/registerPatient", icon: FaFileAlt },
-    { name: "Employee Management", path: "/employee", icon: FaFileAlt }
-  ]
+    { name: "Employee Records", path: "/employee-records", icon: FaFileAlt },
+    { name: "patient register", path: "/patient-register", icon: FaFileAlt },
+
+
+  ];
 
   return (
     <Box
@@ -41,7 +50,7 @@ function Sidebar() {
 
       <VStack spacing={4} align="stretch">
         {menuItems.map((item) => {
-          const Icon = item.icon
+          const Icon = item.icon;
 
           return (
             <Button
@@ -50,23 +59,26 @@ function Sidebar() {
               to={item.path}
               leftIcon={<Icon />}
               justifyContent="flex-start"
+              variant="ghost"
+              colorScheme="blue"
               size="md"
               borderRadius="lg"
-              _activeLink={{
+              _hover={{
                 bg: "blue.500",
                 color: "white",
               }}
-              _hover={{
-                textDecoration: "none",
+              _activeLink={{
+                bg: "blue.600",
+                color: "white",
               }}
             >
               {item.name}
             </Button>
-          )
+          );
         })}
       </VStack>
     </Box>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;

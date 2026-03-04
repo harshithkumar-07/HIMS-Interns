@@ -1,31 +1,48 @@
-import express from "express"
-import {  getComplaint } from "../controllers/complaints.controllers.js"
-import { postComplaint } from "../controllers/complaints.controllers.js"
-import { updateComplaint } from "../controllers/complaints.controllers.js"
-import { deleteComplaint } from "../controllers/complaints.controllers.js"
-import upload from "../middleware/upload.js"
-const patient_complaints=express.Router()
+import express from "express";
+import upload from "../middleware/upload.js";
+import {
+  getComplaintMaster,
+  postComplaintMaster,
+  updateComplaintMaster,
+  deleteComplaintMaster,
+  getComplaintList,
+  updateComplaintStatus,
+  getComplaintAttachments,
+  postComplaintAttachment,
+  deleteComplaintAttachment
+} from "../controllers/complaint.Controller.js";
 
-patient_complaints.get("/getComplaint",
-  upload.single("attachment_path")
-  ,getComplaint)
+const complaintRouter = express.Router();
 
+// Complaint master routes
+complaintRouter.get("/getComplaintMaster", getComplaintMaster);
 
-patient_complaints.post(
-  "/postComplaint",
-  upload.single("attachment_path"),
-  postComplaint
+complaintRouter.post(
+  "/postComplaintMaster",
+  upload,
+  postComplaintMaster
 );
 
+complaintRouter.put("/updateComplaintMaster/:complaint_id", updateComplaintMaster);
 
-patient_complaints.put("/updateComplaint/:complaint_id",
-  upload.single("attachment_path"),
-  updateComplaint)
+complaintRouter.delete("/deleteComplaintMaster/:complaint_id", deleteComplaintMaster);
 
+// Complaint list routes
+complaintRouter.get("/getComplaintList", getComplaintList);
+complaintRouter.patch("/updateStatus/:complaint_id", updateComplaintStatus);
 
-patient_complaints.delete("/deleteComplaint/:complaint_id",
-  
-  upload.single("attachment_path"),
-  deleteComplaint)
+// Attachment routes
+complaintRouter.get("/getComplaintAttachments", getComplaintAttachments);
 
-export default patient_complaints;
+complaintRouter.post(
+  "/postComplaintAttachment",
+  upload,
+  postComplaintAttachment
+);
+
+complaintRouter.delete(
+  "/deleteComplaintAttachment/:attachment_id",
+  deleteComplaintAttachment
+);
+
+export default complaintRouter;
