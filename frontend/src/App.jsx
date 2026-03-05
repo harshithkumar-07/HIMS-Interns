@@ -15,8 +15,11 @@ import Complaints from "./pages/complaints";
 import ComplaintList from "./pages/complaint_list";
 
 // Employees
-import EmployeeRecords from "./pages/employeeRecords";
+import Employee from "./pages/employee";
 import EmployeeRequest from "./pages/EmployeeRequest";
+
+import PatientRecords from "./pages/patientsRecords";
+import RegisterPatient from "./pages/registerPatient";
 
 function App() {
   return (
@@ -37,8 +40,11 @@ function App() {
           <Route path="/complaint_list" element={<ComplaintList />} />
 
           {/* Employees */}
-          <Route path="/employee-records" element={<EmployeeRecords />} />
+          <Route path="/employee-records" element={<Employee />} />
           <Route path="/employee-request" element={<EmployeeRequest />} />
+
+          {/* Patients */}
+          <Route path="/patient-records" element={<PatientRecords />} />
         </Routes>
       </Box>
     </Flex>

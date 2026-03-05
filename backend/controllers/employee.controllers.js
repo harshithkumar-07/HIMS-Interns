@@ -1,6 +1,4 @@
 import con from "../db.js";
-
-// ✅ GET All Employees (DATE FIXED)
 export const getEmployees = async (req, res) => {
   try {
     const result = await con.query(`
@@ -37,8 +35,6 @@ export const getEmployees = async (req, res) => {
   }
 };
 
-
-// ✅ REGISTER Employee (DOB FIXED)
 export const registerEmployee = async (req, res) => {
   try {
     const {
