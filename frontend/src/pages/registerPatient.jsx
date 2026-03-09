@@ -27,7 +27,7 @@ import {
   Td,
 } from "@chakra-ui/react";
 
-function RegisterPatient({ selectedPatient, onSave }) {
+function RegisterPatient({  onSave }) {
   const toast = useToast();
 
   const [tabIndex, setTabIndex] = useState(0);

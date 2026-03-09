@@ -51,7 +51,7 @@ function Employee() {
 
   const fetchEmployees = async () => {
     try {
-      const res = await fetch("http://localhost:3000/employee/getEmployees");
+     const res = await fetch("http://localhost:3000/api/employee/getEmployees");
       const result = await res.json();
       setEmployees(result.data || []);
     } catch (err) {
@@ -142,8 +142,8 @@ function Employee() {
     if (!validate()) return;
 
     const url = editId
-      ? `http://localhost:3000/employee/updateEmployee/${editId}`
-      : "http://localhost:3000/employee/registerEmployee";
+  ? `http://localhost:3000/api/employee/updateEmployee/${editId}`
+  : "http://localhost:3000/api/employee/registerEmployee";
 
     const method = editId ? "PUT" : "POST";
 
@@ -196,7 +196,7 @@ function Employee() {
     if (!window.confirm("Delete this record?")) return;
 
     try {
-      await fetch(`http://localhost:3000/employee/deleteEmployee/${id}`, {
+      await fetch(`http://localhost:3000/api/employee/deleteEmployee/${id}`, {
         method: "DELETE",
       });
 
@@ -216,7 +216,7 @@ function Employee() {
 
   return (
     <Flex minH="100vh" align="center" justify="center" bg="gray.50" p={6}>
-      <Box ml="260px" maxW="1100px" w="100%" p={6} bg="white" boxShadow="lg" borderRadius="xl">
+      <Box  maxW="1100px" w="100%" p={6} bg="white" boxShadow="lg" borderRadius="xl">
         <Tabs index={tabIndex} onChange={(i) => setTabIndex(i)} variant="enclosed">
           <TabList>
             <Tab>Register Employee</Tab>
