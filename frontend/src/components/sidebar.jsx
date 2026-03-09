@@ -6,6 +6,9 @@ import {
   FaExclamationCircle,
   FaFileAlt,
   FaClipboardList,
+  FaUser,
+  FaUsers,
+  FaUserPlus,
 } from "react-icons/fa";
 import { MdFeedback } from "react-icons/md";
 
@@ -17,9 +20,9 @@ function Sidebar() {
     { name: "Patient Complaints", path: "/complaints", icon: FaExclamationCircle },
     { name: "Complaint List", path: "/complaint_list", icon: FaClipboardList },
     { name: "Request (Employee)", path: "/request", icon: FaFileAlt },
-    { name: "Employee Records", path: "/employee-records", icon: FaFileAlt },
-    { name: "patient register", path: "/patient-register", icon: FaFileAlt },
-
+    { name: "Employee Records", path: "/employee-records", icon: FaUsers },
+    { name: "patient register", path: "/patient-register", icon: FaUserPlus },
+    { name: "employee login", path: "/employee-login", icon: FaUser },
 
   ];
 
