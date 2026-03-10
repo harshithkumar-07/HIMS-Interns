@@ -21,6 +21,8 @@ import EmployeeRequest from "./pages/EmployeeRequest";
 import PatientRecords from "./pages/patientsRecords";
 import RegisterPatient from "./pages/registerPatient";
 import EmployeeRecords from "./pages/employee"
+import EmployeeLogin from "./pages/employeeLogin";
+import EmployeeDashboard from "./pages/employeeDashboard";
 
 function App() {
   return (
@@ -30,7 +32,7 @@ function App() {
       <Box flex="1" p={5} ml="260px">
         <Routes>
           {/* Home */}
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<EmployeeLogin />} />
 
           {/* Feedback */}
           <Route path="/feedback" element={<FeedbackForm />} />
@@ -52,6 +54,7 @@ function App() {
           <Route path="/request" element={<EmployeeRequest />} />
           <Route path="/employee-records" element={<EmployeeRecords />} />
           <Route path="/patient-register" element={< RegisterPatient  />} />
+          <Route path="/employee-dashboard" element={< EmployeeDashboard />} />
 
 
 

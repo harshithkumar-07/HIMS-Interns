@@ -9,6 +9,9 @@ import requestRoutes from "./routes/request.routes.js";
 import employeeRoutes from "./routes/employee.Routes.js"; 
 import PatientRouter from "./routes/registerPatient.Routes.js";
 import EmployeeRouter from "./routes/employee.Routes.js";
+import EmployeeLoginRouter from "./routes/employeeLogin.Routes.js";
+import EmployeeDashboardRouter from "./routes/employeeDashboard.Routes.js"
+// import complaintAssginedRouter from "./routes/complaint_assigned.Routes.js"
 // import complaintAssginedRouter from "./routes/complaint_assigned.Routes.js"
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,6 +39,8 @@ app.use("/complaints", complaintRoutes);
 app.use("/request", requestRoutes);
 app.use("/patient",PatientRouter)
 app.use("/employee",EmployeeRouter)
+app.use("/",EmployeeLoginRouter)
+app.use("/employee-dashboard",EmployeeDashboardRouter)
 // app.use("/complaint-assigned", complaintAssginedRouter)
 // ================= START SERVER =================
 app.listen(PORT, () => {

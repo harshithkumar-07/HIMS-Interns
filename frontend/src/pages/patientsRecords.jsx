@@ -172,8 +172,6 @@ function PatientRecords() {
   );
 }
 
-<<<<<<< HEAD
+
+
 export default PatientRecords;
-=======
-export default PatientRecords;
->>>>>>> 370e0caf6224e1c503a21ece2b2290acfb202f06

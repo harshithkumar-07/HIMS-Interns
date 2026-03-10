@@ -218,7 +218,7 @@ function RegisterPatient({  onSave }) {
   return (
     <Flex minH="100vh" align="center" justify="center" bg="gray.50" p={6}>
       <Box
-        ml="260px"
+        ml="20px"
         maxW="1000px"
         w="100%"
         p={6}
