@@ -14,7 +14,7 @@ import { MdFeedback } from "react-icons/md";
 
 function Sidebar() {
   const menuItems = [
-    { name: "Home", path: "/", icon: FaHome },
+    { name: "Home", path: "/home", icon: FaHome },
 
     // Feedback
     { name: "Patient Feedback", path: "/feedback", icon: FaCommentDots },
@@ -29,6 +29,7 @@ function Sidebar() {
     { name: "Employee Request", path: "/employee-request", icon: FaFileAlt },
 
     // Patients
+    { name: "Patient Records", path: "/patient-records", icon: FaUserInjured },
     { name: "Employee Records", path: "/employee-records", icon: FaFileAlt },
     { name: "patient register", path: "/patient-register", icon: FaUserPlus },
 
