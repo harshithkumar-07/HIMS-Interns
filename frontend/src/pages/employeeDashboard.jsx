@@ -167,7 +167,7 @@ function EmployeeDashboard() {
             rightIcon={<FiLogOut />}
             size="sm"
             variant="ghost"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/login")}
           >
             Logout
           </Button>
@@ -225,7 +225,7 @@ function EmployeeDashboard() {
                   >
                     <Td>
                       <Text fontWeight="800" fontSize="sm" color="blue.600">
-                        #{c.complaint_id}
+                        {c.complaint_id}
                       </Text>
                     </Td>
 
